@@ -1,25 +1,33 @@
 package com.erefe.blog.controller;
 
 import com.erefe.blog.entity.Category;
+import com.erefe.blog.mapper.CategoryMapper;
+import com.erefe.blog.response.CategoryResponse;
 import com.erefe.blog.service.CategoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/categories")
 public class CategoryController {
 
     private final CategoryService categoryService ;
+    private final CategoryMapper categoryMapper;
 
-    public CategoryController(CategoryService  categoryService) {
+    public CategoryController(CategoryService  categoryService, CategoryMapper categoryMapper) {
         this.categoryService = categoryService;
+        this.categoryMapper = categoryMapper;
     }
 
     @GetMapping
-    public List<Category> getAllCategories() {
-        return categoryService.findAll();
+    public List<CategoryResponse> getAllCategories() {
+        return categoryService.findAll()
+                .stream()
+                .map(categoryMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     @PostMapping
