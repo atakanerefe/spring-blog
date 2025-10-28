@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name="categories")
 @Getter
 @Setter
-public class Category {
+public class Category extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -20,6 +20,8 @@ public class Category {
 
     @Column(nullable = false)
     private String name;
+
+
     private String description;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -10,9 +10,6 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface PostMapper {
 
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "title", source = "title")
-    @Mapping(target = "content", source = "content")
     @Mapping(target = "categoryName",
             expression = "java(post.getCategory() != null ? post.getCategory().getName() : null)")
     PostResponse toResponse(Post post);
